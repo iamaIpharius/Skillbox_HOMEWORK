@@ -10,4 +10,13 @@ violator_songs = [
     ['Clean', 5.83]
 ]
 
-# TODO здесь писать код
+songs_ad = int(input('Сколько песен? '))
+total_time = 0
+for song_num in range(songs_ad):
+    print('Введите название', song_num + 1, 'песни:', end=' ')
+    song = input()
+    for violator_song in violator_songs:
+        if song == violator_song[0]:
+            total_time += violator_song[1]
+
+print('Общее время звучания песен:', round(total_time, 2), 'минут')
