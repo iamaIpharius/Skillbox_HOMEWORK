@@ -24,4 +24,18 @@ store = {
     ],
 }
 
-# TODO здесь писать код
+
+def total_cost(key, store, goods):
+    id_of_good = goods[key]
+    total_ad = 0
+    total_price = 0
+    if id_of_good in store:
+        for position in store[id_of_good]:
+            total_ad += position['quantity']
+            total_price += position['quantity'] * position['price']
+    print('{good} - {ad} шт, стоимость {total_price} руб'.format(good=key, ad=total_ad, total_price=total_price))
+    return total_price
+
+
+for item in goods:
+    total_cost(item, store, goods)
