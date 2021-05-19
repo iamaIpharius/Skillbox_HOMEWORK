@@ -9,18 +9,13 @@ for num in range(number_of_pairs):
         print('Слово уже есть')
     else:
         synon_dict[pair[0]] = pair[1]
-print(synon_dict)
+        synon_dict[pair[1]] = pair[0]
+
 word = input('Введите слово: ').lower()
-flag = True
-while flag:
+while True:
     if word in synon_dict:
         print('Синоним:', synon_dict[word])
-        flag = False
-    elif word in synon_dict.values():
-        for word_dict in synon_dict:
-            if synon_dict[word_dict] == word:
-                print('Синоним:', word_dict)
-                flag = False
+        break
     else:
         print('Такого слова в словаре нет.')
-        word = input('Введите слово: ')
+        word = input('Введите слово: ').lower()
