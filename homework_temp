@@ -1,0 +1,326 @@
+##################19_3#############################
+data = {
+
+    "address": "0x544444444444",
+
+    "ETH": {
+
+        "balance": 444,
+
+        "totalIn": 444,
+
+        "totalOut": 4
+
+    },
+
+    "count_txs": 2,
+
+    "tokens": [
+
+        {
+
+            "fst_token_info": {
+
+                "address": "0x44444",
+
+                "name": "fdf",
+
+                "decimals": 0,
+
+                "symbol": "dsfdsf",
+
+                "total_supply": "3228562189",
+
+                "owner": "0x44444",
+
+                "last_updated": 1519022607901,
+
+                "issuances_count": 0,
+
+                "holders_count": 137528,
+
+                "price": False
+
+            },
+
+            "balance": 5000,
+
+            "totalIn": 0,
+
+            "total_out": 0
+
+        },
+
+        {
+
+            "sec_token_info": {
+
+                "address": "0x44444",
+
+                "name": "ggg",
+
+                "decimals": "2",
+
+                "symbol": "fff",
+
+                "total_supply": "250000000000",
+
+                "owner": "0x44444",
+
+                "last_updated": 1520452201,
+
+                "issuances_count": 0,
+
+                "holders_count": 20707,
+
+                "price": False
+
+            },
+
+            "balance": 500,
+
+            "totalIn": 0,
+
+            "total_out": 0
+
+        }
+
+    ]
+
+}
+
+print(data.keys())
+print(data.values())
+
+data['ETH']['total_diff'] = 100
+print(data['ETH'])
+data['tokens'][0]["fst_token_info"]['name'] = 'doge'
+print(data['tokens'][0]["fst_token_info"]['name'])
+data['ETH']['total_out'] = data['tokens'][0].pop('total_out')
+
+print(data['tokens'][0])
+data['tokens'][1]['sec_token_info']['total_price'] = data['tokens'][1]['sec_token_info'].pop('price')
+print(data['tokens'][1]['sec_token_info'])
+
+##################19_4#############################
+
+goods = {
+
+    'Лампа': '12345',
+
+    'Стол': '23456',
+
+    'Диван': '34567',
+
+    'Стул': '45678',
+
+}
+
+
+
+store = {
+
+    '12345': [
+
+        {'quantity': 27, 'price': 42},
+
+    ],
+
+    '23456': [
+
+        {'quantity': 22, 'price': 510},
+
+        {'quantity': 32, 'price': 520},
+
+    ],
+
+    '34567': [
+
+        {'quantity': 2, 'price': 1200},
+
+        {'quantity': 1, 'price': 1150},
+
+    ],
+
+    '45678': [
+
+        {'quantity': 50, 'price': 100},
+
+        {'quantity': 12, 'price': 95},
+
+        {'quantity': 43, 'price': 97},
+
+    ],
+
+}
+
+
+def total_cost(key, store, goods):
+    id_of_good = goods[key]
+    total_ad = 0
+    total_price = 0
+    if id_of_good in store:
+        for position in store[id_of_good]:
+            total_ad += position['quantity']
+            total_price += position['quantity'] * position['price']
+    print('{good} - {ad} шт, стоимость {total_price} руб'.format(good=key, ad=total_ad, total_price=total_price))
+    return total_price
+
+
+for item in goods:
+    total_cost(item, store, goods)
+
+
+
+##################19_5#############################
+
+def get_invert_dict(dictionary):
+	uniq_freq = set(dictionary.values())
+	uniq_let = set(dictionary.keys())
+	new_dict = dict()
+	for freq in uniq_freq:
+		new_dict[freq] = []
+		for item in uniq_let:
+			if freq == dictionary[item]:
+				new_dict[freq].append(item)
+	return new_dict
+
+
+text = input('Введите текст: ').lower()
+text_dict = dict()
+for letter in text:
+	if letter in text_dict:
+		text_dict[letter] += 1
+	else:
+		text_dict[letter] = 1
+print('Оригинальный словарь частот: ')
+for key in sorted(text_dict.keys()):
+	print(key, ":", text_dict[key])
+
+print('Инвертированный словарь частот: ')
+invert_dict = get_invert_dict(text_dict)
+for key in sorted(invert_dict.keys()):
+	print(key, ":", invert_dict[key])
+
+
+
+##################19_6#############################
+
+
+number_of_pairs = int(input('Сколько будет пар? '))
+synon_dict = dict()
+print('Введите пары слов через пробел: ')
+for num in range(number_of_pairs):
+    pair = input('{0} пара: '.format(num + 1)).lower().split()
+    if pair[0] in synon_dict.keys() or pair[0] in synon_dict.values():
+        print('Слово уже есть')
+    elif pair[1] in synon_dict.keys() or pair[0] in synon_dict.values():
+        print('Слово уже есть')
+    else:
+        synon_dict[pair[0]] = pair[1]
+print(synon_dict)
+word = input('Введите слово: ').lower()
+flag = True
+while flag:
+	if word in  synon_dict:
+		print('Синоним:', synon_dict[word])
+		flag = False
+	elif word in  synon_dict.values():
+		for word_dict in synon_dict:
+			if synon_dict[word_dict] == word:
+				print('Синоним:', word_dict)
+				flag = False
+	else:
+		print('Такого слова в словаре нет.')
+		word = input('Введите слово: ')
+		
+##################19_7#############################
+
+number_of_orders = int(input('Сколько заказов? '))
+order_dict = dict()
+
+print('Введите слова через пробел в формате `Покупатель название пиццы количество заказанных пицц`: ')
+for num in range(number_of_orders):
+    order = input('{0} заказ: '.format(num + 1)).lower().split() #Форма [Имя, Пицца, Кол-Во]
+    name = order[0]
+    pizza = order[1]
+    total_piz = int(order[2])
+    pizza_dict = dict()
+    if name in order_dict:
+    	if pizza in order_dict[name]:
+    		order_dict[name][pizza] += total_piz
+    	else:
+    		pizza_dict[pizza] = total_piz
+    		order_dict[name].update(pizza_dict)
+    else:
+    	pizza_dict[pizza] = total_piz
+    	order_dict[name] = pizza_dict
+
+print(order_dict)
+for item in sorted(order_dict.keys()):
+	print(item.title(), ':')
+	for order in sorted(order_dict[item]):
+		print('\t', order.title(), ':', pizza_dict[order])
+
+##################19_8#############################
+import random
+N = int(input('Введите число максимальное: '))
+
+hidden_number = str(random.randint(1, N))
+
+not_solved = True
+no_help = True
+
+num_set_yes = {str(i) for i in range(1, N + 1)}
+
+
+while not_solved or no_help:
+    numbers = input('Нужное число есть среди вот этих чисел: ')
+    if numbers.lower() == 'help':
+        print('Артём мог загадать следующие числа: ', num_set_yes)
+        no_help = False
+        break
+    num_set_maybe = set(numbers)
+    if hidden_number in num_set_maybe:
+        if len(num_set_maybe) == 1:
+            print('Угадал!')
+            not_solved = False
+            break
+        else:
+            print('Ответ Артёма: Да')
+            num_set_yes &= num_set_maybe
+    elif hidden_number not in num_set_maybe:
+        print('Ответ Артёма: Нет')
+        num_set_yes -= num_set_maybe
+        
+        
+##################19_9#############################
+
+
+total_family = int(input('Сколько членов семьи? '))
+family_dict = dict()
+high_dict = dict()
+high = -1
+
+
+
+
+for i in range(1, total_family):
+	pair_enter = input('Введите {0} пару: '.format(i)).split()
+	family_dict.update(dict(pair_enter))
+prev = ''
+for item in family_dict:
+	parent = family_dict[item]
+	kid = item
+	if parent == prev:
+		high_dict[kid] = high + 1
+		
+	else:
+		high += 1
+		high_dict[parent] = high
+		high_dict[kid] = high + 1
+		prev = parent
+
+
+
+print(high_dict)
