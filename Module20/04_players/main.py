@@ -4,4 +4,12 @@ players = {
     ("Rob", "Bobbin"): (12, 8, 2)
 }
 
-# TODO здесь писать код
+answer = []
+for id_of_item, item in players.items():
+    temp_list = []
+    for element in id_of_item:
+        temp_list.append(element)
+    for element in item:
+        temp_list.append(element)
+    answer.append(tuple(temp_list))
+print(answer)
