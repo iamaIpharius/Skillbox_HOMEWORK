@@ -4,4 +4,5 @@ players = {
     ("Rob", "Bobbin"): (12, 8, 2)
 }
 
-# TODO здесь писать код
+answer = [id_of_item + item for id_of_item, item in players.items()]
+print(answer)

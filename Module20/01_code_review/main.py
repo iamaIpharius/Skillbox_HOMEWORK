@@ -20,25 +20,19 @@ students = {
 }
 
 
-def f(dict):
-    lst = []
-    string = ''
-    for i in dict:
-        lst += (dict[i]['interests'])
-        string += dict[i]['surname']
-    cnt = 0
-    for s in string:
-        cnt += 1
-    return lst, cnt
+for id_of_student, age_of_student in students.items():
+    print(id_of_student, age_of_student['age'])
 
 
-pairs = []
-for i in students:
-    pairs += (i, students[i]['age'])
+def super_fun(dictionary):
+    interests = set()
+    lenght_of_surname = 0
+
+    for _, value in dictionary.items():
+        interests = interests | set(value['interests'])
+        lenght_of_surname += len(value['surname'])
+    return interests, lenght_of_surname
 
 
-my_lst = f(students)[0]
-l = f(students)[1]
-print(my_lst, l)
-
-# TODO исправить код
+total_inter, total_len = super_fun(students)
+print(total_inter, '\n', total_len)
