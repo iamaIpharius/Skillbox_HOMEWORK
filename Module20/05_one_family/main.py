@@ -1,8 +1,11 @@
 def get_family_members(family_dict, surname):
 
     for name, age in family_dict.items():
-        if surname.startswith(name):
+        if name.lower().startswith(surname.lower()):
             print(name, age)
+        elif name.lower().startswith(surname[:-1].lower()):
+            print(name, age)
+
 
 
 my_dict = {
