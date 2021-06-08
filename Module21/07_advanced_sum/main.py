@@ -1,11 +1,11 @@
 def super_sum(*args):
     result = 0
-    for i in args:
-        if isinstance(i, list):
-            for j in range(len(i)):
-                result += super_sum(i[j])
+    for arg in args:
+        if isinstance(arg, list):
+            for num_arg, sub_arg in enumerate(arg):
+                result += super_sum(sub_arg)
         else:
-            result += i
+            result += arg
     return result
 
 print(super_sum([[1, 2, [3]], [1], 3]))
