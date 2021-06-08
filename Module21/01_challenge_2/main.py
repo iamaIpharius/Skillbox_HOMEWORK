@@ -1,9 +1,12 @@
-def super_fun(num, start=1):
-    print(start)
-    if start == num:
-        return
-    start += 1
-    super_fun(num, start)
+def super_fun(num, start=1, result=[]):
+    if start < num:
+        result.append(start)
+        start += 1
+        return super_fun(num, start, result)
+    else:
+        result.append(start)
+        return result
 
 
-super_fun(5)
+
+print(super_fun(5))
