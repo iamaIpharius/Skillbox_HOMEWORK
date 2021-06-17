@@ -14,9 +14,15 @@ while flag:
 
 if os.path.exists(os.path.dirname(path)):
     if os.path.exists(path):
-        open_file = open(path, 'a')
-        open_file.write(text)
-        open_file.close()
+        answer = input('нужна ли перезапись? (да/нет) ')
+        if answer == 'да':
+            new_file = open(path, 'w')
+            new_file.write(text)
+            new_file.close()
+        elif answer == 'нет':
+            open_file = open(path, 'a')
+            open_file.write(text)
+            open_file.close()
     else:
         new_file = open(path, 'w')
         new_file.write(text)
