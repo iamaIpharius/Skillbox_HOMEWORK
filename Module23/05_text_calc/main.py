@@ -11,29 +11,24 @@ with open('calc.txt', 'r', encoding='utf-8') as calc_file:
             if oper == '+':
                 temp = a + b
                 result += temp
-                print(temp)
             elif oper == '-':
                 temp = a - b
                 result += temp
-                print(temp)
             elif oper == '*':
                 temp = a * b
                 result += temp
-                print(temp)
             elif oper == '/':
                 temp = a / b
                 result += temp
-                print(temp)
             elif oper == '%':
                 temp = a % b
                 result += temp
-                print(temp)
             elif oper == '//':
                 temp = a // b
                 result += temp
-                print(temp)
             else:
                 raise SyntaxError
+            print(temp)
         except SyntaxError:
             print('ошибка в операторе')
         except ValueError:
