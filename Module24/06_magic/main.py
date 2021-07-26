@@ -3,13 +3,13 @@ class Fire:
 
     def __add__(self, other):
         if isinstance(other, Air):
-            return Lightning
+            return Lightning()
         elif isinstance(other, Water):
-            return Steam
+            return Steam()
         elif isinstance(other, Earth):
-            return Lava
+            return Lava()
         elif isinstance(other, Mud):
-            return Brick
+            return Brick()
 
 
 class Air:
@@ -17,33 +17,33 @@ class Air:
 
     def __add__(self, other):
         if isinstance(other, Water):
-            return Storm
+            return Storm()
         elif isinstance(other, Fire):
-            return Lightning
+            return Lightning()
         elif isinstance(other, Earth):
-            return Dust
+            return Dust()
 
 class Earth:
     name = 'Земля'
 
     def __add__(self, other):
         if isinstance(other, Water):
-            return Mud
+            return Mud()
         elif isinstance(other, Fire):
-            return Lava
+            return Lava()
         elif isinstance(other, Air):
-            return Dust
+            return Dust()
 
 class Water:
     name = 'Вода'
 
     def __add__(self, other):
         if isinstance(other, Air):
-            return Storm
+            return Storm()
         elif isinstance(other, Fire):
-            return Steam
+            return Steam()
         elif isinstance(other, Earth):
-            return Mud
+            return Mud()
 
 class Storm:
     name = 'Шторм'
@@ -58,7 +58,7 @@ class Mud:
 
     def __add__(self, other):
         if isinstance(other, Fire):
-            return Brick
+            return Brick()
 
 class Lightning:
     name = 'Молния'
@@ -77,5 +77,5 @@ class Brick:
 a = Fire()
 b = Mud()
 c = a + b
-
+print(isinstance(c, Brick))
 print(c.name)

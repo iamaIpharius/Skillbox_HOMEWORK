@@ -2,17 +2,18 @@ import random
 
 
 class Flat:
-    fridge = 50
-    money = 0
+    def __init__(self):
+        self.fridge = 50
+        self.money = 0
 
 
 class Human:
-    alive = True
 
-    def __init__(self, name, Flat):
+    def __init__(self, name, flat):
         self.name = name
         self.feed = 50
-        self.my_flat = Flat
+        self.my_flat = flat
+        self.alive = True
 
     def eating(self, index):
         if self.alive:
@@ -53,35 +54,31 @@ class Human:
         print('Еды в запасе -', self.my_flat.fridge)
         print('Деняк -', self.my_flat.money)
 
-house = Flat
-people = [Human('Biba', house), Human('Boba', house)]
+    def act(self):
+        dice = random.randint(1, 6)
+        index = 5
+        if self.feed <= 20:
+            self.eating(index)
+        elif self.my_flat.fridge <= 10:
+            self.buying_food(index)
+        elif self.my_flat.money <= 50:
+            self.working(index)
+        elif dice == 1:
+            self.working(index)
+        elif dice == 2:
+            self.eating(index)
+        else:
+            self.playing(index)
+        self.info()
 
+
+house = Flat()
+people = [Human('Biba', house), Human('Boba', house)]
 
 for i in range(1, 366):
     print(f'{i} день совместной жизни!')
     for human in people:
-
-        dice = random.randint(1, 6)
-        index = 5
-        if human.feed <= 20:
-            human.eating(index)
-        elif human.my_flat.fridge <= 10:
-            human.buying_food(index)
-        elif human.my_flat.money <= 50:
-            human.working(index)
-        elif dice == 1:
-            human.working(index)
-        elif dice == 2:
-            human.eating(index)
-        else:
-            human.playing(index)
-        human.info()
+        human.act()
 
 for human in people:
     human.info()
-
-
-
-
-
-

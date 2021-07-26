@@ -65,46 +65,49 @@ class Player:
     def opening(self):
         return self.score
 
+    def play(self, dealer):
+        print('Игра началась!')
+        playing = True
+
+        while playing:
+            self.info()
+            print('Берем карту или останавливаемся?')
+            choice = input('1 - берем, 2 - останавливаемся: ')
+
+            if choice == '1':
+                self.get_more()
+                if self.opening() > 21:
+                    self.info()
+                    print('Вы проиграли!')
+                    playing = False
+            elif choice == '2':
+                player_result = self.opening()
+                dealer_result = dealer.opening()
+                if player_result > 21:
+                    print('Вы проиграли!')
+                    playing = False
+                elif player_result == 21:
+                    print('Вы выиграли!')
+                    playing = False
+                elif player_result > dealer_result:
+                    print(f'Ваш результат - {player_result}, результат дилера - {dealer_result}')
+                    print('Вы выиграли!')
+                    playing = False
+                elif player_result == dealer_result:
+                    print(f'Ваш результат - {player_result}, результат дилера - {dealer_result}')
+                    print('Ничья!')
+                    playing = False
+                else:
+                    print(f'Ваш результат - {player_result}, результат дилера - {dealer_result}')
+                    print('Вы програли!')
+                    playing = False
+            else:
+                print('Введена неизвестная команда')
 
 new_deck = Deck()
 
 new_player = Player(new_deck)
 new_dealer = Dealer(new_deck)
 
-print('Игра началась!')
-playing = True
+new_player.play(new_dealer)
 
-while playing:
-    new_player.info()
-    print('Берем карту или останавливаемся?')
-    choice = input('1 - берем, 2 - останавливаемся: ')
-
-    if choice == '1':
-        new_player.get_more()
-        if new_player.opening() > 21:
-            new_player.info()
-            print('Вы проиграли!')
-            playing = False
-    elif choice == '2':
-        player_result = new_player.opening()
-        dealer_result = new_dealer.opening()
-        if player_result > 21:
-            print('Вы проиграли!')
-            playing = False
-        elif player_result == 21:
-            print('Вы выиграли!')
-            playing = False
-        elif player_result > dealer_result:
-            print(f'Ваш результат - {player_result}, результат дилера - {dealer_result}')
-            print('Вы выиграли!')
-            playing = False
-        elif player_result == dealer_result:
-            print(f'Ваш результат - {player_result}, результат дилера - {dealer_result}')
-            print('Ничья!')
-            playing = False
-        else:
-            print(f'Ваш результат - {player_result}, результат дилера - {dealer_result}')
-            print('Вы програли!')
-            playing = False
-    else:
-        print('Введена неизвестная команда')
