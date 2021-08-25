@@ -13,7 +13,7 @@ class Property:
 
 class Apartment(Property):
     def __init__(self, worth):
-        super().__init__(worth)
+        self.worth = worth
 
     def __str__(self):
         return 'Квартира'
@@ -21,7 +21,7 @@ class Apartment(Property):
 
 class Car(Property):
     def __init__(self, worth):
-        super().__init__(worth)
+        self.worth = worth
 
     def __str__(self):
         return 'Машина'
@@ -29,7 +29,7 @@ class Car(Property):
 
 class CountryHouse(Property):
     def __init__(self, worth):
-        super().__init__(worth)
+        self.worth = worth
 
     def __str__(self):
         return 'Дача'

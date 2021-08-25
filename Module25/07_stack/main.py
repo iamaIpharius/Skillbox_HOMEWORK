@@ -1,6 +1,7 @@
 def sort_f(tup):
     return tup[1]
 
+
 class Stack:
     def __init__(self):
         self.__list = []
@@ -19,48 +20,61 @@ class Stack:
 
 
 class Manager:
-    def __init__(self, stack):
-        self.__stack = stack
+    def __init__(self):
+        self.__dict_of_stacks = dict()
 
     def __str__(self):
-        temp = self.__stack.get_list()
-        temp = sorted(temp, key=lambda task: task[1])
-        new_temp = []
-        for i_elem in temp:
-            if i_elem[1] not in new_temp:
-                new_temp.append(i_elem[1])
-            new_temp.append(i_elem[0])
+        list_k = list(self.__dict_of_stacks.keys())
+        list_k.sort()
+        for i in list_k:
+            print(f'Приоритет {i}')
+            if len(self.__dict_of_stacks[i].get_list()) > 0:
+                for task in self.__dict_of_stacks[i].get_list():
+                    print(f'Задача - {task[0]}')
+            else:
+                print('(EMPTY)')
 
-        new_temp = [str(i) for i in new_temp]
-        result = ' '.join(new_temp)
-        return result
+        return ''
 
     def new_task(self, task, priority):
         new_task = (task, priority)
-        self.__stack.add(new_task)
+        if priority in self.__dict_of_stacks:
+            self.__dict_of_stacks[priority].add(new_task)
+        else:
+            self.__dict_of_stacks[priority] = Stack()
+            self.__dict_of_stacks[priority].add(new_task)
 
     def delete_task(self, task):
-        list = self.__stack.get_list()
-        for index, val in enumerate(list):
-            for elem in val:
-                if task == elem:
-                    list.pop(index)
-                    self.__stack.set_list(list)
-                    break
+        delete_list = []
+        for d_elem in self.__dict_of_stacks.values():
+            for l_elem in d_elem.get_list():
+                if l_elem[0] == task:
+                    delete_elem = (l_elem[0], l_elem[1], d_elem.get_list().index(l_elem))
+                    delete_list.append(delete_elem)
+
+        if len(delete_list) == 1:
+            self.__dict_of_stacks[delete_list[0][1]].get_list().pop(delete_list[0][2])
+        elif len(delete_list) > 1:
+            for index, elem in enumerate(delete_list, 1):
+                print(f'Номер задачи {index} Название задачи {elem[0]}, приоритет {elem[1]}')
+            answer = int(input('Какую задачу удаляем? Введите номер: '))
+            for index, elem in enumerate(delete_list, 1):
+                if answer == index:
+                    self.__dict_of_stacks[elem[1]].get_list().pop(elem[2])
+
         else:
             print('Элемент для удаления не найден')
 
 
-
-
-
-my_stack = Stack()
-task_manager = Manager(my_stack)
+task_manager = Manager()
 
 task_manager.new_task('купить продукты', 2)
 task_manager.new_task('сделать дз', 3)
 task_manager.new_task('работать', 1)
 task_manager.new_task('есть', 1)
+task_manager.new_task('есть', 2)
+task_manager.new_task('есть', 3)
+task_manager.new_task('есть', 4)
 
 print(task_manager)
 

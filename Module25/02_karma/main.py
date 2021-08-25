@@ -1,13 +1,39 @@
 import random
 
+
+class KillError(Exception):
+    def __str__(self):
+        return 'KillError'
+
+
+class DrunkError(Exception):
+    def __str__(self):
+        return 'DrunkError'
+
+
+class CarCrashError(Exception):
+    def __str__(self):
+        return 'CarCrashError'
+
+
+class GluttonyError(Exception):
+    def __str__(self):
+        return 'GluttonyError'
+
+
+class DepressionError(Exception):
+    def __str__(self):
+        return 'DepressionError'
+
+
 class Life:
     __karma_constant = 500
     __list_of_sins = [
-        'KillError',
-        'DrunkError',
-        'CarCrashError',
-        'GluttonyError',
-        'DepressionError'
+        KillError,
+        DrunkError,
+        CarCrashError,
+        GluttonyError,
+        DepressionError
     ]
 
     def __init__(self):
@@ -22,7 +48,7 @@ class Life:
         if chance_of_sin == 1:
             sin = random.choice(self.__list_of_sins)
             with open('karma.log', 'a', encoding='utf-8') as log:
-                log.write(sin)
+                log.write(str(sin))
                 log.write('\n')
 
 
