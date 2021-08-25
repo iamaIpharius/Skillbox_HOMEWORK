@@ -1,1 +1,255 @@
-# TODO здесь писать код
+import random
+
+
+class House:
+    def __init__(self):
+        self.__money = 100
+        self.__food = 50
+        self.__catFood = 30
+        self.__dirt = 0
+        self.__money_index = 0
+        self.__food_index = 0
+        self.__coat_index = 0
+
+    def get_money(self):
+        return self.__money
+
+    def get_food(self):
+        return self.__food
+
+    def get_catFood(self):
+        return self.__catFood
+
+    def get_dirt(self):
+        return self.__dirt
+
+    def set_money(self, index):
+        self.__money += index
+
+
+    def set_food(self, index):
+        self.__food += index
+
+
+    def set_catFood(self, index):
+        self.__catFood += index
+
+    def set_dirt(self, index):
+        self.__dirt += index
+
+    def set_coat_index(self):
+        self.__coat_index += 1
+
+    def set_money_index(self, index):
+        self.__money_index += index
+
+    def set_food_index(self, index):
+        self.__food_index += index
+
+    def info(self):
+        print(f'Деняк в доме {self.__money}')
+        print(f'Еды в доме {self.__food}')
+        print(f'Кошачей еды в доме {self.__catFood}')
+        print(f'Грязи в доме {self.__dirt}')
+
+    def year_info(self):
+        print(f'Заработано {self.__money_index}')
+        print(f'Съедено {self.__food_index}')
+        print(f'Куплено шуб {self.__coat_index}')
+
+
+class Creature:
+    def __init__(self, name, house):
+        self.__name = name
+        self.__feed = 30
+        self.__house = house
+        self.__alive = True
+
+    def eat(self):
+        index = random.randint(1, 30)
+        self.set_feed(index)
+        self.get_house().set_food(-index)
+        self.get_house().set_food_index(index)
+
+    def info(self):
+        if self.__alive:
+            print(f'{self.__name} жив, сытость: {self.__feed}')
+        else:
+            print(self.__name, 'Умер')
+
+    def set_feed(self, index):
+        self.__feed += index
+        if self.__feed > 100:
+            self.__feed = 100
+
+    def get_feed(self):
+        return self.__feed
+
+    def get_house(self):
+        return self.__house
+
+    def get_alive(self):
+        return self.__alive
+
+    def set_alive(self, index):
+        self.__alive = index
+
+    def act(self):
+        pass
+
+
+class Human(Creature):
+    def __init__(self, name, house):
+        super().__init__(name, house)
+        self.__happiness = 100
+
+    def set_happiness(self, index):
+        self.__happiness += index
+        if self.__happiness > 100:
+            self.__happiness = 100
+    def get_happiness(self):
+        return self.__happiness
+    def pet_the_cat(self):
+        self.set_happiness(5)
+
+    def info(self):
+        super().info()
+        print(f'Счастье: {self.__happiness}')
+
+    def act(self):
+        pass
+
+class Cat(Creature):
+    def __init__(self, name, house):
+        super().__init__(name, house)
+
+    def eat(self):
+        index = random.randint(1, 10)
+        self.get_house().set_catFood(-index)
+        self.set_feed(2 * index)
+        if self.get_feed() > 100:
+            self.set_feed(100)
+
+    def damage_house(self):
+        self.get_house().set_dirt(5)
+
+    def act(self):
+        dice = random.randint(1, 2)
+        if dice == 1:
+            if self.get_feed() <= 0:
+                self.set_alive(False)
+            elif not self.get_alive():
+                return
+            else:
+                self.eat()
+        elif dice == 2:
+            self.damage_house()
+
+
+
+class HumanRoleModel1(Human):
+    def __init__(self, name, house):
+        super().__init__(name, house)
+
+    def play(self):
+        self.set_feed(-10)
+        self.set_happiness(20)
+
+    def work(self):
+        self.set_feed(-10)
+        self.get_house().set_money(150)
+        self.get_house().set_money_index(150)
+
+    def act(self):
+        if self.get_happiness() <= 10:
+            self.set_alive(False)
+        if self.get_house().get_dirt() >= 90:
+            self.set_happiness(-10)
+        if self.get_feed() <= 0:
+            self.set_alive(False)
+
+        if not self.get_alive():
+            return
+        else:
+            dice = random.randint(1, 4)
+            if dice == 1:
+                self.eat()
+            elif dice == 2:
+                self.work()
+
+            elif dice == 3:
+                self.pet_the_cat()
+
+            elif dice == 4:
+
+                self.play()
+
+
+class HumanRoleModel2(Human):
+    def __init__(self, name, house):
+        super().__init__(name, house)
+
+    def buy_products(self):
+        self.set_feed(-10)
+        self.get_house().set_food(10)
+        self.get_house().set_catFood(10)
+        self.get_house().set_money(-20)
+
+    def buy_coat(self):
+        self.set_feed(-10)
+        self.get_house().set_money(-350)
+        self.set_happiness(60)
+        self.get_house().set_coat_index()
+
+    def clean(self):
+        index = random.randint(1, 100)
+        self.set_feed(-10)
+        self.get_house().set_dirt(-index)
+
+    def act(self):
+        if self.get_happiness() <= 10:
+            self.set_alive(False)
+        if self.get_house().get_dirt() >= 90:
+            self.set_happiness(-10)
+        if self.get_feed() <= 0:
+            self.set_alive(False)
+
+        if not self.get_alive():
+            return
+        else:
+            dice = random.randint(1, 5)
+            if dice == 1:
+                self.buy_products()
+            elif dice == 2:
+                self.clean()
+            elif dice == 3:
+                self.eat()
+            elif dice == 4:
+                self.pet_the_cat()
+            elif dice == 5:
+                if self.get_house().get_money() > 500:
+                    self.buy_coat()
+
+
+my_house = House()
+biba = HumanRoleModel1('Biba', my_house)
+boba = HumanRoleModel2('Boba', my_house)
+lupa = Cat('Lupa', my_house)
+
+
+for i in range(1, 366):
+    print(f'\n {i} День \n')
+    if not biba.get_alive() or not boba.get_alive():
+        print('Эксперимент не удался! Кто-то или все умерли...')
+        break
+    else:
+        my_house.set_dirt(5)
+        lupa.act()
+        lupa.info()
+        biba.act()
+        biba.info()
+        boba.act()
+        boba.info()
+
+my_house.year_info()
+
