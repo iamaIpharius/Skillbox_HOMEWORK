@@ -1,12 +1,17 @@
-import os.path
-
-def gen_files_path(path, catalog_to_find):
-    path_list = os.path.l
+import os
 
 
+def gen_files_path(path=os.path.join('C:')):
+    for i in os.listdir(path):
+        cur_path = os.path.join(path, i)
+        if os.path.isfile(cur_path):
+            yield cur_path
+        elif os.path.isdir(cur_path):
+            for q in gen_files_path(cur_path):
+                print(q)
 
 
+my_path = os.path.join(input('Введите путь: '))
 
-
-
-path = os.path.abspath('C:\PYTHON')
+for q in gen_files_path(my_path):
+    print(q)
