@@ -11,7 +11,7 @@ def gen_files_path(path=os.path.join('C:')):
                 print(q)
 
 
-os.path.join(os.path.abspath('.').split(os.path.sep)[0])
+my_path = os.path.join(input('Введите путь: '))
 
-for q in gen_files_path():
+for q in gen_files_path(my_path):
     print(q)
