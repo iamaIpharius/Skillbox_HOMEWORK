@@ -1,7 +1,7 @@
 import os
 
 
-def gen_files_path(path=os.path.join('C:')):
+def gen_files_path(path: str = os.path.join('C:')) -> str:
     for i in os.listdir(path):
         cur_path = os.path.join(path, i)
         if os.path.isfile(cur_path):
