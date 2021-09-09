@@ -1,18 +1,23 @@
-from typing import List
 class QHofstadter:
-    def __init__(self, s: List[int]) -> None:
+    def __init__(self, s):
         self.s = s
 
-    def __next__(self) -> int:
-        try:
+    def __next__(self):
+        if self.right_numbers():
             q = self.s[-self.s[-1]] + self.s[-self.s[-2]]
             self.s.append(q)
             return q
-        except IndexError:
+        else:
             raise StopIteration()
 
-    def __iter__(self) -> None:
+    def __iter__(self):
         return self
+
+    def right_numbers(self) -> bool:
+        if self.s[0] == 1 and self.s[1] == 1:
+            return True
+        else:
+            return False
 
 
 my_q = QHofstadter([1, 1])
