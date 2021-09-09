@@ -8,7 +8,7 @@ def gen_files_path(path: str = os.path.join('C:')) -> str:
             yield cur_path
         elif os.path.isdir(cur_path):
             for q in gen_files_path(cur_path):
-                print(q)
+                yield q
 
 
 my_path = os.path.join(input('Введите путь: '))
