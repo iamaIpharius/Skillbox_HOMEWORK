@@ -14,10 +14,7 @@ class QHofstadter:
         return self
 
     def right_numbers(self) -> bool:
-        if self.s[0] == 1 and self.s[1] == 1:
-            return True
-        else:
-            return False
+        return (self.s[0] == 1 and self.s[1] == 1)
 
 
 my_q = QHofstadter([1, 1])
