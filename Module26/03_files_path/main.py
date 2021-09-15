@@ -2,27 +2,24 @@ import os
 from collections.abc import Iterable
 
 
-def find_path(to_find: str, start: str = os.path.join('C:')) -> None:
+def find_path(to_find: str, start: str = os.path.join('C:'), flag=False) -> Iterable:
     for i in os.listdir(start):
-        current = os.path.join(start, i)
-        if i == to_find and os.path.isdir(current):
-            for q in gen_files_path(current):
-                print(q)
-        elif os.path.isdir(current):
-            find_path(to_find, current)
+        current_path = os.path.join(start, i)
+        if os.path.isfile(current_path):
+            yield current_path
+        elif i == to_find and os.path.isdir(current_path):
+            print('Директоряи найдена!')
+            raise StopIteration
+        elif os.path.isdir(current_path):
+            yield from find_path(to_find, current_path, flag)
 
 
-def gen_files_path(path: str) -> str:
-    for i in os.listdir(path):
-        cur_path = os.path.join(path, i)
-        if os.path.isfile(cur_path):
-            yield cur_path
-        elif os.path.isdir(cur_path):
-            for q in gen_files_path(cur_path):
-                yield q
 
 
 my_path = os.path.abspath(input('Введите директорию, где будем искать: '))
 find = input('Какой каталог ищем? ')
 
-find_path(find, my_path)
+for i in find_path(find, my_path):
+
+    print(i)
+
