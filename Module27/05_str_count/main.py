@@ -1,4 +1,3 @@
-import datetime
 import functools
 from typing import Callable, Any
 
@@ -7,6 +6,7 @@ def counter(f: Callable) -> Any:
     """
 
     :param f: декорируемая функция
+    :wrapper.count: атрибут для подсчета количества вызовов функции
     :return: оберточная функция
     """
 
@@ -16,18 +16,17 @@ def counter(f: Callable) -> Any:
 
         :param args: аргументы
         :param kwargs: именованные аргументы
-        :log: файл для подсчета количества вызовов функции
         :f: декорируемая функция выполняется
         :return: конец
         """
-        with open('openlog.txt', 'a') as log:
-            dtm = datetime.datetime.now()
-            log.write(f'function execute {dtm} \n')
-        with open('openlog.txt', 'r') as log:
-            count = sum(1 for _ in log)
 
-        print(f'Функция вызвана {count} раз')
-        return f(*args, **kwargs)
+        wrapper.count += 1
+        result = f(*args, **kwargs)
+        print(f'Функция выполнена {wrapper.count} раз')
+        return result
+
+    wrapper.count = 0
+
 
     return wrapper
 

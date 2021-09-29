@@ -16,8 +16,8 @@ def wait(f: Callable) -> Any:
         :return: конец
         """
         time.sleep(5)
-        f(*args, **kwargs)
-        return
+        result = f(*args, **kwargs)
+        return result
     return wrapper
 
 @wait

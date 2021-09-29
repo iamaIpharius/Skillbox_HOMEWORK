@@ -8,9 +8,12 @@ def how_are_you(f: Callable) -> Callable:
     :param f: передается функция
     :return: возвращает функцию
     """
-    input('Как дела?')
-    print('А у меня не очень!\nЛадно, держи свою функцию...')
-    return f
+    def wrapper(*args, **kwargs):
+        input('Как дела?')
+        print('А у меня не очень!\nЛадно, держи свою функцию...')
+
+        return f(*args, **kwargs)
+    return wrapper
 
 
 @how_are_you
