@@ -1,5 +1,3 @@
-import datetime
-import inspect
 import functools
 from typing import Callable, Any
 
@@ -31,12 +29,9 @@ def debug(f: Callable) -> Any:
         all_arg = tuple(all_arg)
         print(f'Вызывем функцию {f.__name__}{all_arg}')
 
-        # full_arg = inspect.getfullargspec(f)[0]
-        # print(full_arg)
-        # sig = inspect.signature(f)
-        # print(sig.bind(args, kwargs))
-        f(args, kwargs)
-        return
+        temp = f(*args, **kwargs)
+        print(f'"{f.__name__}" вернула значение {temp}')
+        return temp
 
     return wrapper
 
@@ -52,4 +47,4 @@ def greeting(name: str, age: int = None) -> str:
 greeting("Том")
 greeting("Миша", age=100)
 greeting(name="Катя", age=16)
-
+print(greeting(name="Катя", age=16))
