@@ -2,6 +2,7 @@ class Square:
     """
     Базовый квадрат
     """
+
     def __init__(self, side: int) -> None:
         """
         Инициализация
@@ -45,6 +46,7 @@ class Triangle:
     """
     Базовый треугольник
     """
+
     def __init__(self, height: int, foundation: int) -> None:
         """
         Инициализация
@@ -101,33 +103,40 @@ class Triangle:
         self._foundation = new_value
 
 
-class Cube(Square):
+class SurfaceMixin:
     """
-    Куб
+    Миксин для подсчета площади поверхности фигур
     """
-    def __init__(self, side: int) -> None:
+    def s_surface(self) -> [int, float]:
         """
-        Инициализация
-        :param side: сторона квадрата 
-        """
-        super().__init__(side)
-        self._cube = [Square(side) for _ in range(6)]
-
-    def s_surface_cube(self) -> int:
-        """
-        Площадь поверхности куба
-        :return: Площадь поверхности куба
+        Подсчет площади поверхности фигур
+        :return: Площадь поверхности фигур
         """
         result = 0
-        for cub in self._cube:
+        for cub in self._figure:
             result += cub.s()
         return result
 
 
-class Pyramid(Triangle):
+class Cube(Square, SurfaceMixin):
+    """
+    Куб
+    """
+
+    def __init__(self, side: int) -> None:
+        """
+        Инициализация
+        :param side: сторона квадрата
+        """
+        super().__init__(side)
+        self._figure = [Square(side) for _ in range(6)]
+
+
+class Pyramid(Triangle, SurfaceMixin):
     """
     Пирамида
     """
+
     def __init__(self, height: int, foundation: int) -> None:
         """
         Инициализация
@@ -135,19 +144,11 @@ class Pyramid(Triangle):
         :param foundation: основание основание
         """
         super().__init__(height, foundation)
-        self._pyramid = [Triangle(height, foundation) for _ in range(4)]
-
-    def s_sutface_pyr(self) -> int:
-        """
-        Площадь поверхности пирамиды
-        :return: Площадь поверхности пирамиды
-        """
-        result = 0
-        for cub in self._pyramid:
-            result += cub.s()
-        return result
+        self._figure = [Triangle(height, foundation) for _ in range(4)]
 
 
 a = Cube(6)
-print(a.s_surface_cube())
+b = Pyramid(6, 5)
 
+print(a.s_surface())
+print(b.s_surface())
