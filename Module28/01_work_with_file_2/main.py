@@ -29,7 +29,6 @@ class File:
         else:
             print('Файла нет в каталоге! Создаем новый в режиме записи')
             self._open_file = open(self._file, 'w')
-        print(type(self._open_file))
         return self._open_file
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> bool:
@@ -38,10 +37,15 @@ class File:
         :param exc_type:
         :param exc_val:
         :param exc_tb:
+        :error_list: список ошибок для проверки
         :return: пропускает все ошибки
         """
-        self._open_file.close()
-        return True
+        error_list = [SyntaxError, NameError, TypeError, ValueError]
+        if exc_type in error_list:
+            self._open_file.close()
+            return True
+        else:
+            self._open_file.close()
 
 
 with File('text3.txt', 'r') as my_f:
