@@ -5,7 +5,7 @@ import functools
 def decorator_with_args_for_any_decorator(decorator):
     def decorator_maker(*args, **kwargs):
         @functools.wraps(decorator)
-        def wrap(func):
+        def wrap(func: Callable) -> Callable:
             return decorator(func, *args, **kwargs)
 
         return wrap
