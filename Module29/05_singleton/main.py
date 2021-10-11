@@ -1,6 +1,10 @@
-def singleton(cls):
-    instances = dict()
+from collections.abc import Callable
+import functools
 
+
+def singleton(cls: Callable) -> Callable:
+    instances = dict()
+    @functools.wraps(cls)
     def getinstance(*args, **kwargs):
         if cls not in instances:
             instances[cls] = cls(*args, **kwargs)
