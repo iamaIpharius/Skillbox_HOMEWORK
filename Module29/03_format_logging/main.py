@@ -4,8 +4,8 @@ from datetime import datetime
 import time
 
 
-def logger(_func=None, *, form: str) -> Callable:
-    def dec(func):
+def logger(_func=None, *, form: str):
+    def dec(func: Callable) -> Callable:
         @functools.wraps(func)
         def wrap(*args, **kwargs):
             dtm = datetime.utcnow()
@@ -31,8 +31,8 @@ def logger(_func=None, *, form: str) -> Callable:
         return dec(_func)
 
 
-def log_methods(form: str) -> Callable:
-    def dec(cls):
+def log_methods(form: str):
+    def dec(cls: Callable) -> Callable:
 
         for i_method in dir(cls):
             if not i_method.startswith('__'):
