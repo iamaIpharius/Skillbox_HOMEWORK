@@ -1,6 +1,7 @@
 from collections.abc import Callable
 import functools
 from datetime import datetime
+import time
 
 
 def logger(_func=None, *, form: str) -> Callable:
@@ -14,8 +15,12 @@ def logger(_func=None, *, form: str) -> Callable:
             temp = temp.replace('H', str(dtm.hour))
             temp = temp.replace('M', str(dtm.minute))
             result = temp.replace('S', str(dtm.second))
+            print(f'---Запускается метод {func}, время запуска: {result}')
+            start = time.time()
             f = func(*args, **kwargs)
-            print(f'метод {func} класса выполнен {result}')
+            end = time.time()
+            time_result = round(end - start, 3)
+            print(f'---Завершение {func}, время работы {time_result}')
             return f
 
         return wrap
@@ -27,13 +32,13 @@ def logger(_func=None, *, form: str) -> Callable:
 
 
 def log_methods(form: str) -> Callable:
-    
     def dec(cls):
 
         for i_method in dir(cls):
             if not i_method.startswith('__'):
-                result = logger(_func=i_method, form=form)
-                return result
+                cur_method = getattr(cls, i_method)
+                dec_method = logger(_func=cur_method, form=form)
+                setattr(cls, i_method, dec_method)
 
         return cls
 
@@ -69,10 +74,8 @@ class B(A):
         return result
 
 
-kek = A()
-print(type(kek))
-kek.test_sum_1()
+
+
 my_obj = B()
-print(type(my_obj))
 my_obj.test_sum_1()
 my_obj.test_sum_2()
