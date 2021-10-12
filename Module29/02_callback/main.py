@@ -6,9 +6,11 @@ app = dict()
 
 def callback(path: str):
     def dec(func: Callable) -> Callable:
+        app[path] = func
+        
         @functools.wraps(func)
         def wrap(*args, **kwargs):
-            app[path] = func
+            
             return func(*args, **kwargs)
 
         return wrap
